@@ -1,0 +1,18 @@
+Report
+------
+Acknowledgement: The following report are quoted and revised from Chapter 9 of the <Practical Algorithms for Programmers> by Andrew Binstock and John Rex.
+-------------------------------------------------------------------------------
+As stated throughout this chapter(Chapter 9), various techniques are suited to certain kinds of data. Table 9-1, which follows, shows the compression efficiency of the algorithms presented in this chapter. In all cases, the file used for compression were large. Compression of smaller files will show varying results.
+
+Table 9-1: Check the book
+
+  This table shows more interesting pattern. On large files, 16-bit LZW is consistently better than 12-bit LZW. LZW is generally better than sliding window (pure binary files are the exception); sliding window techniques are better than Huffman, and all are better than RLE.
+
+  There are factors other than compression efficiency to consider when choosing an algorithm. For example, of all these implementations, sliding window was the slowest -- often much slower that the rest -- and RLE was the fastest. RLE compresses sufficiently only on databases (as explained ealier). However, it does have a singular advantage: it is the only method that can recover from corrption. The other methods encode bytes as short bit patterns. If any bit is corrupted, all downstream bytes are necessarily corrupted. Whereas, in RLE, the corruption is limited to the corrupted bytes. If a single bit is corrupted, only that data byte or encoded symbol is affected. Uncompression past the point of the corruption will work correctly.
+
+  Huffman is the only method that cannot be done on the fly. For Huffman to do its work it must read the entire file twice, so the complete dataset must be known before compression can begin.
+
+  LZW, which seems like it should be the favourite under most scenarios, is unfortunately hobbled by the Unisys patents on it. It is not free to use. Undoubtedly, you can create your own version(Welch's addition consisted of preloading the dictionary). However, even these cobbled versions may need to be licensed prior to use.
+
+  This means that for most users, that only freely available effective compression routines are Huffman encoding and sliding window. Fortunately, the do an acceptably good job with all types of files.
+  -----------------------------------------------------------------------------
